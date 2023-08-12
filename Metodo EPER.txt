@@ -1,0 +1,20 @@
+EPER: Entender, Planejar, Executar e Revisar.
+
+1° Entender o problema OK
+2° Planejar o problema (Quebrar em pequenos pedaços).
+    2.1 Obter as notas do usuario.
+2.2 Somar as 4 notas.
+    2.3 Calcular as medias.
+        2.3.1 Somar todas as notas e dividir pela quantidade.
+    2.4 Descobrir se média é >= 6.0 ou < que 6.0
+        2.4.1 Condicional, Comparação, logico.
+    2.5 Apresentar a mensagem na tela
+        output (Escreva)
+
+3° Executar (Nesse momento é que vocês vão colocar a mão no código)
+    3.1 Se na hora de executar, encontrar problemas no planejamento, voltar a etapa anterior e planejar novamente.
+JAMAIS SEGUIR EXECUTANDO QUANDO PEGAR ALGUM PROBLEMA!!!
+
+4° Revisar  (Analisar se o que foi executado é exatamente o que foi planejado)
+
+Entradas => Processamento => Saída

@@ -1,0 +1,66 @@
+Uma loja de ferramentas contratou você para criar um relatório de orçamento para os seus clientes.
+Os produtos que ela vende são:
+
+. Parafusos
+. Arruelas
+. Porcas
+. Chaves de fenda
+. Brocas
+. Buchas
+
+
+O que fazer?
+	Menu Produtos com opções de listar produtos e alterar preços
+	Menu clientes com opções de listar, adicionar, alterar e excluir clientes
+	Menu compras  com opções de listar, adicionar, alterar e excluir compras
+	Menu informações com de listar e alterar
+	Desenvolver sistema de Estoque
+	Desenvolver sistema de Login
+
+
+É necessário informar a quantidade de cada um dos produtos.
+Calcular o total bruto a pagar e perguntar a forma de pagamento.
+
+caso
+Se for a vista, o total sofrerá um desconto de 5%.
+Se for no cartão, o total não sofrerá alteração.
+Se for à prazo, o total sofrerá um acréscimo de 5%.
+
+No relatório deve conter os seguintes dados:
+
+---- cliente ----
+Nome do cliente
+Validade do orçamento
+
+---- orcamento ----
+Percentual de desconto ou acréscimo dos produtos
+Valor total bruto do orçamento 
+Valor líquido do orçamento
+Percentual de desconto do orçamento
+
+---- lista de produtos ----
+Código dos produtos
+Descrição dos produtos
+Valor unitário dos produtos
+Quantidade dos produtos
+Valor total dos produtos
+
+Exemplo:
+
+Nome do cliente:               Validade:
+
+  cód.produto | Nome Produto | vl unit   |  Desc/Acrésc  |   vl Total
+	1		
+	2		
+	3	
+	4	
+	5		
+	6		
+
+Total Bruto = 
+Desc/Acrésc = 
+Total Líquido = 
+
+
+x = espaco - texto
+x = 23 -6

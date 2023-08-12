@@ -1,0 +1,61 @@
+Relatorio
+----------------------------------------------------------------------------------------------------
+Nome do cliente:   Botafogo de Futebol & Regatas               Data: 
+----------------------------------------------------------------------------------------------------
+Cód do produto |    Nome Produto    | Quantidade |   Valor Unit   |  Desc/Acrésc  |   Valor Total
+   PROD01231       Parafusos               8          R$2.27             0.95          17.252
+   PROD024234      Arruelas                7          R$7.89             0.95          52.46849999999999
+   PROD212         Porcas                  5          R$4.32             0.95          20.52
+   PROD041233114   Chaves de fenda         6          R$29.90            0.95         170.42999999999998
+   PROD2305        Brocas                  3          R$8.98             0.95          25.593
+   PROD0644123     Buchas                  1          R$2.89             0.95          2.7455
+
+Relatorio
+----------------------------------------------------------------------------------------------------
+Nome do cliente:   Botafogo de Futebol & Regatas               Data: 
+----------------------------------------------------------------------------------------------------
+Cód do produto |    Nome Produto    | Quantidade |   Valor Unit   |  Desc/Acrésc  |   Valor Total
+   PROD01231       Parafusos               4          R$2.27             1.05          9.534
+   PROD024234      Arruelas                5          R$7.89             1.05          41.4225
+   PROD212         Porcas                  3          R$4.32             1.05          13.608000000000002
+   PROD041233114   Chaves de fenda         4          R$29.90            1.05         125.58
+   PROD2305        Brocas                  7          R$8.98             1.05          66.003
+   PROD0644123     Buchas                  8          R$2.89             1.05          24.276000000000003
+
+Relatorio
+----------------------------------------------------------------------------------------------------
+Nome do cliente:   Serratec               Data: 
+----------------------------------------------------------------------------------------------------
+Cód do produto |    Nome Produto    | Quantidade |   Valor Unit   |  Desc/Acrésc  |   Valor Total
+   PROD01231       Parafusos               7          R$2.27             1.0          15.89
+   PROD024234      Arruelas                2          R$7.89             1.0          15.78
+   PROD212         Porcas                  4          R$4.32             1.0          17.28
+   PROD041233114   Chaves de fenda         6          R$29.90            1.0         179.39999999999998
+   PROD2305        Brocas                  5          R$8.98             1.0          44.900000000000006
+   PROD0644123     Buchas                  9          R$2.89             1.0          26.01
+
+Relatorio
+----------------------------------------------------------------------------------------------------
+Nome do cliente:   Barra Lanches Co.               Data: 
+----------------------------------------------------------------------------------------------------
+Cód do produto |    Nome Produto    | Quantidade |   Valor Unit   |  Desc/Acrésc  |   Valor Total
+   PROD01231       Parafusos               8          R$2.27             1.0               18.16
+   PROD024234      Arruelas                6          R$7.89             1.0               47.339999999999996
+   PROD212         Porcas                  43         R$4.32             1.0               185.76000000000002
+   PROD041233114   Chaves de fenda         6          R$29.90            1.0              179.39999999999998
+   PROD2305        Brocas                  2          R$8.98             1.0               17.96
+   PROD0644123     Buchas                  3          R$2.89             1.0               8.67
+
+Relatorio
+----------------------------------------------------------------------------------------------------
+Nome do cliente:   Serratec               Data: 
+----------------------------------------------------------------------------------------------------
+Cód do produto |    Nome Produto    | Quantidade |   Valor Unit   |  Desc/Acrésc  |   Valor Total
+   PROD01231       Parafusos               4          R$2.27             0.95               8.626
+   PROD024234      Arruelas                8          R$7.89             0.95               59.96399999999999
+   PROD212         Porcas                  5          R$4.32             0.95               20.52
+   PROD041233114   Chaves de fenda         3          R$29.90            0.95              85.21499999999999
+   PROD2305        Brocas                  7          R$8.98             0.95               59.717
+   PROD0644123     Buchas                  2          R$2.89             0.95               5.491
+
+

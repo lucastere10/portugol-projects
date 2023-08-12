@@ -1,0 +1,59 @@
+Atividade 01 - Lucas Medeiros Caldas
+
+A) Pesquise e responda:
+
+1) O que é algoritmo?
+
+Algoritmo é um conjunto de instruções finitas que descrevem um processo para resolver um problema ou executar uma tarefa.
+
+2) O que é um programa de computador?
+
+Programa de computador é um conjunto de instruções escritas em uma linguagem de programação que descrevem um processo executar uma tarefa.
+
+3) O que é uma variável?
+
+Variável é um espaço na memória do computador onde podemos armazenar dados temporariamente.
+
+4) O que é o Portugol Studio?
+
+Portugol Studio é um Ambiente de Desenvolvimento Integrado (IDE) para a linguagem de programação Portugol.
+
+5) O que faz o comando escreva do Portugol?
+
+O comando escreva serve para exibir informações no log, como mensagens e resultados.
+
+6) O que faz o comando leia do Portugol?
+
+O comando leia serve para ler informações digitadas pelo usuário.
+
+7) Defina o que é tipo de variável
+
+O tipo de variável define o tipo de dado que ela pode armazenar. Exemplo: caracter, real, logico, inteiro, cadeia.
+
+8) Explique o que são os tipos de variáveis do Portugol:
+
+   a. cadeia
+	Usadas para armazenar texto. Usa-se aspas duplas ("texto")
+
+   b. inteiro
+	Armazenam números inteiros, positivos e negativos, sem parte decimal. (0)
+
+   c. real
+	Armazenam números decimais (0.00).
+
+   d. logico
+	Armazenam valores booleanos (verdadeiro ou falso)
+
+   e. caracter
+	Armazenam caracteres individuais. Usa-se aspas simples ('@')
+
+9) Dê exemplo:
+
+   a. de entrada de um algoritmo  
+	A entrada pode ser qualquer informação fornecida pelo usuário, como nome, idade, altura, etc.
+
+   b. de processamento de um algoritmo
+	O processamento pode ser qualquer operação realizada pelo algoritmo, como cálculos matemáticos, comparações lógicas, etc.
+
+   c. de saída de um algoritmo
+	A saída pode ser qualquer informação gerada pelo algoritmo, como mensagens na tela, valores calculados, etc

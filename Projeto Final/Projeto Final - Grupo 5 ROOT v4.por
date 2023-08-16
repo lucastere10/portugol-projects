@@ -1,13 +1,12 @@
 programa
 {
-	/*v.4 MODIFICACOES
-	 * modificado: loading no menu agora só acontece quando o usuario digitar o nome
-	 * adicionado: nome do cliente no orcamento
-	 * adicionado: funcao estoque como limitante na hora da compra
-	 * adicionado: estoque agora é atualizado após imprimir novo orçamento
+	/*v.5 MODIFICACOES
+	 * modificado: alterado o sobrenome do Raynan para o Titoneli
+    	 * adicionado: Agora é possivel exportar relatorios. Para isso é necessario um arquivo './relatorio.txt' na mesma pasta do arquivo.por
+    	 * adicionado: Ler relatorios exportados. Aperte 4 no menu (não listado) para ver os relatorios
+	 * fix: modificado alinhamento da tabela
+	 *
 	 */
-	 
-	//OBS: PARA A FUNCAO EXPORTAR FUNCIONAR, É NECESSÁRIO TER UM ARQUIVO relatorio.txt na mesma pasta do arquivo .portugol
 	
 	//Bibliotecas
 	inclua biblioteca Util --> u
@@ -17,61 +16,67 @@ programa
 	inclua biblioteca Tipos --> tp
 	inclua biblioteca Arquivos --> a
 	
-	//Vetores Produto
-	const cadeia vProdutoCodigo[6] = {"1","2","3","4","5","6"}
-	const cadeia vProdutoNome[6] = {"Parafuso", "Arruela", "Porca", "Chave de fenda", "Broca", "Bucha"}
-	real vProdutoPreco[6] = {2.00,3.00,1.00,2.00,3.00,4.00}
-	real vProdutoPrecoUnitarioLiquido[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, vProdutoModificadoUnitario[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
-	inteiro vProdutoQuantidadeUnitaria[] = {0, 0, 0, 0, 0, 0}
-	inteiro vProdutoEstoque[6] = {60,50,10,80,30,20}
+	//Vetores Produto 
+	const cadeia V_PRODUTO_CODIGO[6] = {"1","2","3","4","5","6"}
+	const cadeia V_PRODUTO_NOME[6] = {"Parafuso", "Arruela", "Porca", "Chave de fenda", "Broca", "Bucha"}
+	const real V_PRODUTO_PRECO[6] = {2.00,3.00,1.00,2.00,3.00,4.00}
+
+	//tipo de pagamento
+	const real V_TIPO_PAGAMENTO[3] = {1.05, 1.00, 0.95}
+	const cadeia V_METODO_PAGAMENTO[3] = {"Prazo","Credito","A Vista"}
 	
-	//relatorio
+	//vetores Para Compra
+	real vProdutoPrecoUnitarioLiquido[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, vProdutoModificadoUnitario[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+	inteiro vProdutoQuantidadeUnitaria[] = {0, 0, 0, 0, 0, 0}, vProdutoEstoque[6] = {60,50,10,80,30,20}
+	
+	//resultados para Orcamento
 	cadeia usuarioAtual = ""
 	inteiro dataAtual = cal.dia_mes_atual()
 	real valorLiquido = 0.0, valorBruto = 0.0, descontoFinal = 0.0
 
-	//tipo de pagamento
-	const real tipoPagamento[3] = {1.05, 1.00, 0.95}
-	cadeia vMetodoPagamento[3] = {"Prazo","Credito","A Vista"}
-
 	//arquivo
 	logico relatorioArquivo = falso
 
-	// =========================================== main ===========================================
+	// =========================================== main ==================================================
 	funcao inicio()
 	{
 		menuInicial(falso)
 	}
 	
-	// =========================================== menus ===========================================
+	// =========================================== menus =================================================
 	funcao menuInicial(logico nomeRegistrado){
 	   //listar produtos
 	   //calcular
-		caracter opcao 
-		
+		cadeia opcao
+
 		se (nao nomeRegistrado) {
-			gerarTitulo("LOJA DE FERRAMENTAS MODO EASY")
+			gerarTitulo("LOJA DE FERRAMENTAS HARD")
 			escreva("Informe seu nome: ")
-			leia(usuarioAtual) limpa()
-			loading("Iniciando Programa", 75) limpa()
-			loading("Verificando relatorio.txt ..." , 150)
+			leia(usuarioAtual)	limpa()															//LOAD
+
+			//arquivo
+			//loading("Verificando relatorio.txt ..." , 150)
 			relatorioArquivo = a.arquivo_existe("./relatorio.txt")
 			escreva(" " + relatorioArquivo) u.aguarde(500) limpa()
-			loading("Bem-vindo, " + usuarioAtual + "!", 120) u.aguarde(500)															//LOADING			
+			loading("Iniciando Programa", 60)	limpa()
+			loading("Bem-vindo, " + usuarioAtual + "!", 100) limpa() u.aguarde(500)	
 		}
 		gerarTitulo("LOJA DE FERRAMENTAS HARD")
 		escreva ("Bem-vindo, ", usuarioAtual, ".\n")
 		escreva("\nEscolha uma Opção:\n(1) Orçamento\t\t\n(2) Produtos\t\t\n(3) Sair\nOpção: ") leia(opcao)
-		escolha(opcao){
+
+		se (opcao == "") opcaoInvalida()
+		
+		escolha(txt.obter_caracter(opcao, 0)){
 			caso '1': gerarNovoOrcamento() pare
 			caso '2': listarProdutos() pare
 			caso '3': creditos() pare
 			caso '4': se(relatorioArquivo == verdadeiro){
-					lerArquivo("./relatorio.txt")
-					} senao{
-						limpa()
-						retornarMenu("arquivo relatorio.txt não encontrado, retornando ao menu", 1800)
-					} pare
+				lerArquivo("./relatorio.txt")
+				} senao{
+					limpa()
+					retornarMenu("arquivo relatorio.txt não encontrado, retornando ao menu", 1800)
+				} pare
 			caso contrario: opcaoInvalida()
 		}
 	//limpa()
@@ -83,64 +88,75 @@ programa
 
     	funcao menuClientes(){}
 
-	// =========================================== funcoes ===========================================
+	// =========================================== funcoes ===============================================
 
-	//INICIAR NOVO ORCAMENTO
 	funcao gerarNovoOrcamento(){
-		limpa()
-		caracter opcao
+		cadeia opcao
 		logico loop = verdadeiro
+
+		inteiro opcaoCorreta = -10
 		
 		
 		faca  {
-		
+			limpa()
 			escreva("1. Prazo\n")
 			escreva("2. Crédito\n")
-			escreva("3. Vista\n\n")
-			escreva("4. Retornar Menu\n")
+			escreva("3. Vista\n")
+			escreva("0. Retornar Menu\n\n")
 			escreva("Qual será o método de pagamento?: ") leia(opcao)
 
-			escolha (opcao) {
-				caso '1':
-					loop = falso
-					calcular(tipoPagamento[0])
-					
-					pare
-				caso '2':
-					loop = falso
-					calcular(tipoPagamento[1]) 
-					
-					pare
-				caso '3':
-					loop = falso
-					calcular(tipoPagamento[2]) 
+			se (opcao != "") {
+			
+				escolha (txt.obter_caracter(opcao, 0)) {
+					caso '1':
+						loop = falso
+						opcaoCorreta = 0
 						
-					pare
-				caso '4':
-					loop = falso
-					retornarMenu("", 200)
-					pare
-				caso contrario:
-					escreva("\nOpção invalida")
-					u.aguarde(750)
-					limpa()	
+						pare
+					caso '2':
+						loop = falso
+						opcaoCorreta = 1
+						
+						pare
+					caso '3':
+						loop = falso
+						opcaoCorreta = 2
+							
+						pare
+					caso '0':
+						loop = falso
+						opcaoCorreta = -1
+						
+						pare
+					caso contrario:
+						escreva("\nOpção invalida")
+						u.aguarde(750)
+						limpa()	
+				}
 			}
+
 			
 		} enquanto (loop)
 
+		//dessa forma consigo encerrar o loop antes de ir pra outra função, isso evita problemas de performance
+		
+		se (opcaoCorreta == -1) retornarMenu("", 200)
+		senao calcularOrcamento(opcaoCorreta ,V_TIPO_PAGAMENTO[opcaoCorreta])
 	}
 
-	funcao calcular(real metodoPagamento) {
+	funcao calcularOrcamento (inteiro metodoPagamentoTexto, real metodoPagamento){
+		
 		limpa()
 		zerarOrcamento()
 		opcoesCompra(metodoPagamento)
-		//limpa()
-		//imprimirOrcamento()
+		
+		limpa()
+		imprimirOrcamento (metodoPagamentoTexto, metodoPagamento)
 	}
 	
-	funcao opcoesCompra(real metodoPagamento) {
+	funcao opcoesCompra (real metodoPagamento){
 		cadeia codigoInformado
-		inteiro contador = 0, i
+		inteiro contador = 0, codigoInteiro
 		cadeia opcaoLoop
 		cadeia quantidade = ""
 		
@@ -150,7 +166,8 @@ programa
 				limpa()
 				gerarTitulo("   ORÇAMENTO PREVIEW\t\t\t\t\t\t(Digite 0 Para Finalizar a lista de compras)")							  			  											  
 				escreva("\n")											 
-				imprimirOrcamentoPreviewComQuantidade()											  
+				imprimirOrcamentoPreview()											  
+
 				//limpa()
 				escreva("\nInforme o código do Produto: ") leia(codigoInformado)
 				se (codigoInformado == "0") {
@@ -161,38 +178,31 @@ programa
 				
 			} enquanto (nao validarEntrada(codigoInformado) ou nao validarEntrada(quantidade))
 			
+
+			codigoInteiro = tp.cadeia_para_inteiro(codigoInformado, 10)
+
+			se (codigoInteiro > 0 e codigoInteiro <= 6) {
 			
-														 
-			escolha (tp.cadeia_para_inteiro(codigoInformado, 10)) {
-				caso 1:		
-						realizarCalculoVenda(0, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso 2:
-						realizarCalculoVenda(1, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso 3:
-						realizarCalculoVenda(2, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso 4:
-						realizarCalculoVenda(3, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso 5:
-						realizarCalculoVenda(4, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso 6:
-						realizarCalculoVenda(5, tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
-					pare
-				caso contrario:
-					se (codigoInformado != "0") {
-						escreva("PRODUTO NÂO ENCONTRADO")						  
-						u.aguarde(900)		
-					}
+				realizarCalculoVenda((codigoInteiro - 1), tp.cadeia_para_inteiro(quantidade, 10), metodoPagamento)
+				
+				
+			} senao {
+				
+				se (codigoInteiro == 0)
+					contador = 99
+				senao{
+					escreva("PRODUTO NÂO ENCONTRADO")						  
+					u.aguarde(900)		
+				}
+				
+				
 			}
+
 			
 			se (contador >= 99) {
 				limpa()
 				linhaSimples(119) escreva("\n")
-				imprimirOrcamentoPreviewComQuantidade()
+				imprimirOrcamentoPreview()
 				escreva("\nDeseja gerar o orçamento? (s/n): ")
 				leia(opcaoLoop)
 				se (txt.caixa_baixa(opcaoLoop) == "s") pare	
@@ -200,20 +210,14 @@ programa
 			}
 			contador++
 		} enquanto(verdadeiro)	
-		imprimirRodaPe(metodoPagamento)
-		para(i = 0; i < 6; i++) {
+	
+		para(inteiro i = 0; i < 6; i++) {
 			vProdutoEstoque[i] = vProdutoEstoque[i] - vProdutoQuantidadeUnitaria[i]
 		}
-		se(relatorioArquivo == verdadeiro){
-			exportarRelatorio(usuarioAtual)
-			escreva("\n\nRelatório exportado para ./relatorio.txt\n")	
-			escreva("Para acessa-lo vá a opção Verificar Relatórios")
-		}
-		pressioneEnterParaContinuar ("\n\nPressione enter para voltar ao menu")
-		retornarMenu("",300)
+		
 	}
 
-	funcao realizarCalculoVenda (inteiro indice, inteiro quantidade, real metodoPagamento) {
+	funcao realizarCalculoVenda (inteiro indice, inteiro quantidade, real metodoPagamento){
 		real calculoBruto
 
 		se(quantidade > vProdutoEstoque[indice]){
@@ -221,12 +225,12 @@ programa
 			u.aguarde(2000)
 		}
 		senao{		
-			calculoBruto = quantidade * vProdutoPreco[indice]
+			calculoBruto = quantidade * V_PRODUTO_PRECO[indice]
 			vProdutoQuantidadeUnitaria[indice] = quantidade 
 			
 			se (metodoPagamento == 0) {
 				vProdutoPrecoUnitarioLiquido[indice] = mat.arredondar(calculoBruto, 2)
-				vProdutoModificadoUnitario[indice] = mat.arredondar(vProdutoPreco[indice], 2)
+				vProdutoModificadoUnitario[indice] = mat.arredondar(V_PRODUTO_PRECO[indice], 2)
 			} senao {
 				vProdutoPrecoUnitarioLiquido[indice] = mat.arredondar(calculoBruto * metodoPagamento, 2)
 				vProdutoModificadoUnitario[indice] = mat.arredondar((calculoBruto * metodoPagamento) / quantidade, 2)  //calculoBruto * metodoPagamento - calculoBruto
@@ -234,11 +238,13 @@ programa
 		}
 	}
 
-	funcao imprimirOrcamentoPreviewComQuantidade() {
+	// =========================================== LISTAR ================================================
+	
+	funcao imprimirOrcamentoPreview(){
 		escreva("|    COD     |    PROD\t\t\t|    QTDE\t|    R$(Un.)\t|    Valor líquido\t|    Estoque\t      |\n\n")
 		para (inteiro i=0;i<6; i++){
-			escreva(	"|    " +cEsp(vProdutoCodigo[i],8)+
-				"|    "+ cEsp(vProdutoNome[i],22)+
+			escreva(	"|    " +cEsp(V_PRODUTO_CODIGO[i],8)+
+				"|    "+ cEsp(V_PRODUTO_NOME[i],22)+
 				"|    "+ cEsp(""+vProdutoQuantidadeUnitaria[i],11)+
 				"|    R$"+ cEsp(""+vProdutoModificadoUnitario[i],9),
 				"|    R$"+ cEsp(""+vProdutoPrecoUnitarioLiquido[i],17),
@@ -247,61 +253,74 @@ programa
 		}
 	}
      	
-	funcao imprimirOrcamento(cadeia pMetodo){
-		limpa()	linha(97)
+	funcao imprimirOrcamento(inteiro metodoPagamentoTexto, real metodoPagamento){
+		
+		//loading("Verificando Método de Pagamento escolhido...\n", 150) limpa()											//LOADGIN
+		//loading("Calculando descontos...\n", 150) limpa()
+		//loading("Gerando Relatório, Aguarde...\n", 300) limpa()
+		
+		linha(97)
 		escreva("\n| Cliente: " + cEsp(txt.caixa_alta(usuarioAtual),26) + " | Emissão: ")	retornarDataAtual()
-		escreva(" | Validade: " + validadeEmissao() + " |\n")	linha(97)
+		escreva(" | Validade: " + cEsp(validadeEmissao(),36) + " |\n")	linha(97)
 		escreva("\n|\t\t\t\t  -= PRODUTOS SELECIONADOS =-    \t\t\t\t|\n")	linha(97)		escreva("\n") 
 		escreva("|      COD\t|", "     PROD\t\t|", "     QTDE\t|","    R$(un.)\t|","    Valor líquido\t|", "\n")	linha(97)	escreva ("\n")
 		para (inteiro i=0;i<6; i++){se (vProdutoQuantidadeUnitaria[i] > 0){
 			escreva(
-				"|\t#", 	vProdutoCodigo[i], 
-				"\t|  ",	cEsp(+ vProdutoNome[i],21),
+				"|\t#", 	V_PRODUTO_CODIGO[i], 
+				"\t|  ",	cEsp(+ V_PRODUTO_NOME[i],21),
 				"|\t", 	vProdutoQuantidadeUnitaria[i],
 				"\t|\t", 	vProdutoModificadoUnitario[i], 
 				"\t|\t",	vProdutoPrecoUnitarioLiquido[i],
 				"\t\t|\n")
 			}
 		} linha(97)
+		imprimirRodaPe(metodoPagamento)
 	}
 
-	funcao imprimirRodaPe (real metodoPagamento) {
-		cadeia Pagamento = "A vista"
-		limpa()
-		loading("Verificando Método de Pagamento escolhido...\n", 130) limpa()														//LOADING
-		loading("Calculando descontos...\n", 130) limpa()
-		loading("Gerando Relatório, Aguarde...\n", 280) limpa()
-		imprimirOrcamento (Pagamento)
+	funcao imprimirRodaPe (real metodoPagamento){
+
+		cadeia texto
+		
 		para (inteiro i = 0; i < 6; i++) {
-			valorBruto += (vProdutoPreco[i] * vProdutoQuantidadeUnitaria[i])
-		}	
+			valorBruto += (V_PRODUTO_PRECO[i] * vProdutoQuantidadeUnitaria[i])
+		}
+			
 		valorLiquido = valorBruto * metodoPagamento
 		descontoFinal = (valorBruto - valorLiquido) * -1
-		escreva("\n| Valor Bruto: R$"+mat.arredondar(valorBruto, 2)) 
+		
+		texto = "\n| Valor Bruto: R$"+mat.arredondar(valorBruto, 2) 
+		
 		se (metodoPagamento > 1) {
-			escreva("\t| Acrescimo Total: +R$"	+ mat.arredondar(descontoFinal, 2)) 
+			texto +="\t| Acrescimo Total: +R$"	+ mat.arredondar(descontoFinal, 2)
 		} senao se (metodoPagamento < 1) {
-			escreva("\t| Desconto Total: -R$" + mat.arredondar(descontoFinal*-1, 2)) 
+			texto +="\t| Desconto Total: -R$" + mat.arredondar(descontoFinal*-1, 2)
 		} senao {
-			escreva("\t| Desconto/Acrescimo: 0")
+			texto +="\t| Desconto/Acrescimo: 0"
 		}
-		escreva("\t|\t VALOR TOTAL: R$"+mat.arredondar(valorLiquido, 2), "\t\t|") 
-		escreva("\n")
+
+		//TEXTO FINAL
+		texto +="\t|\t VALOR TOTAL: R$"+mat.arredondar(valorLiquido, 2)+"\t\t|"
+		escreva(texto + "\n")
 		linha(97)
-		escreva("\n")
-		//imprimirOrcamentoPreview ()		
+		//gerarTitulo(texto)
+		//verificar relatori
+		se(relatorioArquivo == verdadeiro){
+			exportarRelatorio(usuarioAtual)
+			escreva("\n\n Relatório exportado para ./relatorio.txt\n")	
+			escreva("Para acessa-lo vá a opção Verificar Relatórios")
+		}
+		//voltar ao menu
+		pressioneEnterParaContinuar ("\n\nPressione enter para voltar ao menu")
+		retornarMenu("",300)
 	}
 	
-	// =========================================== LISTAR ===========================================
-
-	
-    funcao listarProdutos(){
+	funcao listarProdutos(){
     			gerarTitulo("Lista de Produtos")
     			escreva("   ID \t\t NOME \t\t\t PREÇO \t\t QUANTIDADE \n")
     			linha(70)
 			para (inteiro i = 0 ; i < 6 ; i++) {
-				escreva ("\n   "+ cEsp(vProdutoCodigo[i],13) + cEsp(vProdutoNome[i],25) + "R$" + 
-							   cEsp(tp.real_para_cadeia(vProdutoPreco[i]),18) + vProdutoEstoque[i])
+				escreva ("\n   "+ cEsp(V_PRODUTO_CODIGO[i],13) + cEsp(V_PRODUTO_NOME[i],25) + "R$" + 
+							   cEsp(tp.real_para_cadeia(V_PRODUTO_PRECO[i]),18) + vProdutoEstoque[i])
 			}
 			pressioneEnterParaContinuar ("\n\nPressione enter para voltar ao menu")
 			retornarMenu("",300)
@@ -320,7 +339,7 @@ programa
 				escreva ("-")		
 	}
 
-	funcao pressioneEnterParaContinuar(cadeia i) { //MODIFICADO, AGORA PODE ESCOLHER A MENSAGEM PARA PLOTAR
+	funcao pressioneEnterParaContinuar(cadeia i){
 		cadeia enter
 		escreva(i)	
 		leia(enter)
@@ -332,11 +351,15 @@ programa
 		menuInicial(verdadeiro)
 	}
 
-	funcao gerarTitulo (cadeia titulo) {
+	funcao gerarTitulo (cadeia titulo){
 		limpa()
-		escreva("==============================\n")
-		escreva("   "+titulo+"\n")
-		escreva("==============================\n\n")        
+		
+		inteiro tamanho = txt.numero_caracteres(titulo)
+		
+		linha(tamanho+6)
+		escreva("\n   "+titulo+"\n")
+		linha(tamanho+6)
+		escreva("\n")
     }
 
 	funcao opcaoInvalida(){
@@ -352,7 +375,7 @@ programa
 		retorne texto
 	}
 
-    funcao retornarDataAtual(){
+    	funcao retornarDataAtual(){
 		escreva(cal.dia_semana_abreviado(cal.dia_semana_atual(), falso, falso), ", ", 	// Dia da Semana Abreviado
 		cal.dia_mes_atual(), "/",
 		cal.mes_atual(), "/",
@@ -363,7 +386,7 @@ programa
 		)
 	}
 
-	funcao zerarOrcamento () {
+	funcao zerarOrcamento (){
 
 		para (inteiro i = 0; i < 6; i++) {
 			vProdutoQuantidadeUnitaria[i] = 0
@@ -387,14 +410,7 @@ programa
 		retorne emissaoValidade
 	}
 
-	funcao creditos(){
-		limpa()
-		gerarTitulo("Agradecemos pela Preferencia!")	
-		escreva("Créditos: \n\n")
-		escreva("\tDouglas Maia \n\tGabriel Teixeira \n\tLucas Caldas \n\tNatally Almeida \n\tRaynan Titoneli \n\tTaynara Aguiar\n\n")
-	}
-
-	funcao logico validarEntrada (cadeia entrada) {
+	funcao logico validarEntrada (cadeia entrada){
 
 		inteiro tamanho = Texto.numero_caracteres(entrada)
 		inteiro contador = 0
@@ -408,12 +424,12 @@ programa
 				contador++
 			}				
 		}
-	
+			
 		retorne tamanho == contador
-	}
-	
+	}	
 
 	funcao loading(cadeia texto, inteiro i){
+		
 		escreva(texto, "\n|       | loading")
 		u.aguarde(i)
 		limpa()
@@ -437,6 +453,13 @@ programa
 		limpa()
 		escreva(texto, "\n|-------| loading")
 		u.aguarde(i)		
+	}
+
+	funcao creditos(){
+		limpa()
+		gerarTitulo("Agradecemos pela Preferencia!")	
+		escreva("Créditos: \n\n")
+		escreva("\tDouglas Maia \n\tGabriel Teixeira \n\tLucas Caldas \n\tNatally Almeida \n\tRaynan Titoneli \n\tTaynara Aguiar\n\n")
 	}
 
 	// =========================================== arquivos =========================================== 
@@ -475,10 +498,10 @@ programa
 		a.escrever_linha("----------------------------------------------------------------------------------------------------", arquivoRelatorio)
 		a.escrever_linha("|      COD\t|"+"     PROD\t\t\t|" + "     QTDE\t|"+"    R$(un.)\t|"+"    Valor líquido"+"\n",arquivoRelatorio)
 		para(i=0; i<6; i++){
-			cadeia linha3 =  "|      "+vProdutoCodigo[i]+
-					     "\t|      "+cEsp(+ vProdutoNome[i],21)+
+			cadeia linha3 =  "|      "+V_PRODUTO_CODIGO[i]+
+					     "\t|      "+cEsp(+ V_PRODUTO_NOME[i],21)+
 					     "\t|      "+vProdutoQuantidadeUnitaria[i]+
-					     "\t|      "+vProdutoPreco[i]+
+					     "\t|      "+V_PRODUTO_PRECO[i]+
 					     "\t|      "+vProdutoPrecoUnitarioLiquido[i]
 			a.escrever_linha(linha3, arquivoRelatorio)
 		}
@@ -488,13 +511,21 @@ programa
 		a.fechar_arquivo(arquivoRelatorio)
 	}
 
+
+
+
+
+
+
+
 }
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 6114; 
+ * @POSICAO-CURSOR = 2253; 
+ * @DOBRAMENTO-CODIGO = [40, 146, 156, 242, 331, 336, 341, 347, 353, 364, 370, 377, 388, 401, 412, 430];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;

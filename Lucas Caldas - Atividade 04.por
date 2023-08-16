@@ -7,6 +7,8 @@ programa{
 	inclua biblioteca Objetos --> obj
 	inclua biblioteca Tipos --> tp
 
+	// ATIVIDADE 04 PORTUGOL - EXERCÍCIOS 1 AO 15 - LUCAS MEDEIROS CALDAS - lucas.m.caldas@aluno.senai.br
+
 	// ========================= MENU ================================= //
 	funcao func_menu(){
 		//escolher opção
@@ -70,6 +72,7 @@ programa{
 		inteiro n_pessoas, contador = 1 
 		real grupo1 = 0, grupo2 = 0, grupo3 = 0, grupo4 = 0, grupo5 = 0
 		escreva("Numero de Pessoas: ") leia(n_pessoas)
+		escreva("\nIdades sorteadas: ")
 		//logica
 		faca{
 			inteiro idade = Util.sorteia(0, 85)
@@ -79,8 +82,9 @@ programa{
 			senao se(idade <= 60) grupo4++
 			senao grupo5++
 			contador++
+			escreva(idade + " ")
 		} enquanto (contador <= n_pessoas)
-		escreva("\nAté 15 anos: ", grupo1, " (", mat.arredondar(100*grupo1/n_pessoas,2) ,"%)")
+		escreva("\n\nAté 15 anos: ", grupo1, " (", mat.arredondar(100*grupo1/n_pessoas,2) ,"%)")
 		escreva("\nDe 16 a 30 anos: ", grupo2, " (", mat.arredondar(100*grupo2/n_pessoas,2) ,"%)")
 		escreva("\nDe 31 a 45 anos: ", grupo3, " (", mat.arredondar(100*grupo3/n_pessoas,2) ,"%)")
 		escreva("\nDe 46 a 60 anos: ", grupo4, " (", mat.arredondar(100*grupo4/n_pessoas,2) ,"%)")
@@ -172,6 +176,7 @@ programa{
 			//escreva("Valor Gasto: R$", v_base[i]," Desconto: ", v_desconto[i], "% Valor Final: R$", v_final[i], "\n")
 			
 		}
+		escreva("\nDigite 0 para finalizar o programa.")
 		faca{
 		escreva("\nDIGITE O VALOR A SER GASTO --> R$") leia(valor_compra)
 		se (valor_compra >= 500) {
@@ -592,7 +597,7 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 13999; 
+ * @POSICAO-CURSOR = 2813; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
